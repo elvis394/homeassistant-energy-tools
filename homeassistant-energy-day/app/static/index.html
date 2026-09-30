@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Energy Day Balance</title>
+    <link rel="stylesheet" href="./static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>Energiebilanz</h1>
+          <p id="range-label">Heute</p>
+        </div>
+        <div class="toolbar">
+          <button id="previous-day" type="button" title="Vorheriger Tag">Zurück</button>
+          <input id="day-picker" type="date" />
+          <button id="today" type="button">Heute</button>
+          <button id="next-day" type="button" title="Nächster Tag">Weiter</button>
+        </div>
+      </header>
+
+      <section class="metrics" aria-label="Tageswerte">
+        <article class="metric accent-green">
+          <span>Hausverbrauch</span>
+          <strong id="house-consumption">0,00 kWh</strong>
+        </article>
+        <article class="metric accent-yellow">
+          <span>Solarertrag</span>
+          <strong id="solar-yield">0,00 kWh</strong>
+        </article>
+        <article class="metric accent-blue">
+          <span>Netzbezug</span>
+          <strong id="grid-import">0,00 kWh</strong>
+        </article>
+        <article class="metric accent-coral">
+          <span>Netzeinspeisung</span>
+          <strong id="grid-export">0,00 kWh</strong>
+        </article>
+        <article class="metric accent-teal">
+          <span>Autarkiegrad</span>
+          <strong id="autarky">0,0 %</strong>
+        </article>
+        <article class="metric accent-violet">
+          <span>Selbstverbrauch</span>
+          <strong id="self-consumption">0,0 %</strong>
+        </article>
+      </section>
+
+      <section class="layout">
+        <section class="panel wide" aria-labelledby="day-chart-title">
+          <div class="panel-header">
+            <h2 id="day-chart-title">Tagesbilanz</h2>
+            <span id="calculation-window"></span>
+          </div>
+          <div class="bars" id="day-bars"></div>
+          <div id="warnings" class="warnings" hidden></div>
+        </section>
+
+        <section class="panel" aria-labelledby="config-title">
+          <div class="panel-header">
+            <h2 id="config-title">Konfiguration</h2>
+            <button id="refresh-entities" type="button">Aktualisieren</button>
+          </div>
+
+          <label class="field">
+            <span>Solarquellen</span>
+            <select id="solar-select"></select>
+          </label>
+          <div class="button-row">
+            <button id="add-solar" type="button">Solarquelle hinzufügen</button>
+          </div>
+          <ul id="solar-list" class="entity-list"></ul>
+
+          <label class="field">
+            <span>Hausbezug aus dem Netz</span>
+            <select id="grid-import-select"></select>
+          </label>
+
+          <label class="field">
+            <span>Hausabgabe ins Netz</span>
+            <select id="grid-export-select"></select>
+          </label>
+
+          <div class="button-row">
+            <button id="save-config" type="button" class="primary">Speichern</button>
+            <span id="save-status" role="status"></span>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel" aria-labelledby="month-title">
+        <div class="panel-header">
+          <div>
+            <h2 id="month-title">Monatsübersicht</h2>
+            <p id="month-summary"></p>
+          </div>
+          <input id="month-picker" type="month" />
+        </div>
+        <div class="month-chart" id="month-chart"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="sources-title">
+        <div class="panel-header">
+          <h2 id="sources-title">Quellenwerte</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Quelle</th>
+                <th>Entity</th>
+                <th>Differenz</th>
+                <th>Samples</th>
+                <th>Reset</th>
+              </tr>
+            </thead>
+            <tbody id="source-table"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <template id="solar-item-template">
+      <li>
+        <span></span>
+        <button type="button" title="Solarquelle entfernen">Entfernen</button>
+      </li>
+    </template>
+
+    <script src="./static/app.js" type="module"></script>
+  </body>
+</html>
